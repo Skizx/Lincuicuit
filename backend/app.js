@@ -1,5 +1,14 @@
 const express = require('express');
-const app = express()
+const mongoose = require('mongoose');
+const app = express();
+require('dotenv').config({path: './config/.env'})
+
+//Je connecte mon API à ma base de données
+mongoose.connect(process.env.MONGO_URL,
+    { useNewUrlParser: true,
+      useUnifiedTopology: true })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 //+++++++++++++ CORS +++++++++++++++++++
 app.use((req, res, next) => {
