@@ -1,7 +1,13 @@
 const express = require('express');
+const bodyParser = require('body-parser')
+const userRoutes = require('./routes/user-routes');
 const mongoose = require('mongoose');
 const app = express();
 require('dotenv').config({path: './config/.env'})
+
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 //Je connecte mon API à ma base de données
 mongoose.connect(process.env.MONGO_URL,
@@ -20,5 +26,10 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
   });
+
+//+++++++++++++ MIDDLEWARE ++++++++++++++
+
+// routes
+app.use('/api/user', userRoutes)
 
 module.exports = app;
