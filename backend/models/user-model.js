@@ -1,63 +1,78 @@
 // Importation Mongoose, Unique validator
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
-const bcrypt = require('bcrypt'); 
-
+const { isEmail } = require('validator');
+const bcrypt = require('bcrypt');
 
 // Création d'un schéma d'un modèle de base de données pour les informations utilisateurs
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     pseudo: {
-        type: String,
-        required: true,
-        minLength: 3,
-        maxLength: 33,
-        unique: true,
-        trim: true,
+      type: String,
+      required: true,
+      minLength: 3,
+      maxLength: 55,
+      unique: true,
+      trim: true
     },
     email: {
-        type: String,
-        required: true,
-        lowercase: true,
-        trim: true,
+      type: String,
+      required: true,
+      validate: [isEmail],
+      lowercase: true,
+      unique: true,
+      trim: true,
     },
     password: {
-        type: String,
-        required: true,
-        max: 900,
-        minLength: 5,
+      type: String,
+      required: true,
+      max: 1024,
+      minlength: 6
     },
-    bio: {
-        type: String,
-        max: 900,
+    picture: {
+      type: String,
+      default: "./uploads/profil/random-user.png"
+    },
+    bio :{
+      type: String,
+      max: 1024,
     },
     followers: {
-        type: [String]
+      type: [String]
     },
     following: {
-        type: [String]
+      type: [String]
     },
     likes: {
-        type: [String]
+      type: [String]
     }
-},
-{
+  },
+  {
     timestamps: true,
-}
-)
-
-// Application du validator au schéma
-userSchema.plugin(uniqueValidator);
+  }
+);
 
 // Application du cryptage du mot de passe avant inscription
 userSchema.pre("save", async function(next) {
-    // Utilisation de genSalt permettant de generer une serie de caractère par bcrypt pour le salage de mot de passe
-    const salt = await bcrypt.genSalt();
-    // Utilisation de la méthode hash de bcrypt qui crée un hash crypté des mots de passe
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
+// Décryptage du mot de passe lors de la connexion d'un utilisateur 
+// Utilisation comparateur bcrypt
+userSchema.statics.login = async function(email, password) {
+  const user = await this.findOne({ email });
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
+    }
+    throw Error('incorrect password');
+  }
+  throw Error('incorrect email')
+};
+
 // Exportation du schéma User
-const userModels = mongoose.model('user', userSchema);
+const userModels = mongoose.model("user", userSchema);
 module.exports = userModels;
 

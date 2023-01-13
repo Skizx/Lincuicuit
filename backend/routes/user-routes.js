@@ -7,11 +7,16 @@ const user = require('../controllers/user')
 const router = express.Router();
 
 // Création des routes authentification
+// Inscription d'un nouvel utilisateur
 router.post("/register", authController.signUp);
+// Connexion d'un utilisateur déjà existant
+router.post('/login', authController.login)
+
+
 
 // Création des routes affichages/modification/suppréssion utilisateurs
 router.get("/", user.getAllUsers)
-router.get('/:id' , user.getOneUser)
+router.get('/:id', user.getOneUser)
 router.put('/:id', user.updateUser)
 router.delete('/:id', user.deleteUser)
 

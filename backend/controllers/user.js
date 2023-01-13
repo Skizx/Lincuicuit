@@ -16,7 +16,7 @@ module.exports.getOneUser = async (req,res) => {
 
     // Utilisation de la méthode findById pour recupérer l'id de l'objet en la comparant à l'id du parametre de requête
     // Callback err ou data
-    userModels.findById(req.params.id, (err, docs) => {
+    await userModels.findById(req.params.id, (err, docs) => {
         if(!err) res.send(docs);
         else console.log('ID inconnu: ' + err)
     }).select('-password')
@@ -29,7 +29,7 @@ module.exports.updateUser = async (req, res) => {
 
     // Utilisation de la méthode findByIdAndUpdate permettant de recupérer l'id et mettre à jour la bio
     try {
-        userModels.findByIdAndUpdate(
+       await userModels.findByIdAndUpdate(
             {_id: req.params.id},
             {
                 $set: {
@@ -70,7 +70,7 @@ module.exports.followUser = async (req, res) => {
 
     try {
         // Ajout a la liste des followers
-         userModels.findByIdAndUpdate(
+        await userModels.findByIdAndUpdate(
             req.params.id,
             // Ajout a la liste des followers avec addToSet en récupérant l'id de la personne à suivre
             {$addToSet: { following: req.body.idToFollow }},
@@ -82,7 +82,7 @@ module.exports.followUser = async (req, res) => {
             }
         );
         // Ajout a la liste following
-        userModels.findByIdAndUpdate(
+        await userModels.findByIdAndUpdate(
             req.body.idToFollow,
             // Ajout à la liste des following avec addToSet en récupérant l'id de la personne suivie
             {$addToSet: { followers: req.params.id }},
@@ -107,7 +107,7 @@ module.exports.unfollowUser = async (req, res) => {
 
     try {
         // Ajout a la liste des followers
-         userModels.findByIdAndUpdate(
+        await userModels.findByIdAndUpdate(
             req.params.id,
             // Retrait de la liste des followers avec Pull en récupérant l'id de la personne à suivre
             {$pull: { following: req.body.idToUnfollow }},
@@ -119,7 +119,7 @@ module.exports.unfollowUser = async (req, res) => {
             }
         );
         // Ajout a la liste following
-        userModels.findByIdAndUpdate(
+        await userModels.findByIdAndUpdate(
             req.body.idToUnfollow,
             // Retrait de la liste des following avec Pull en récupérant l'id de la personne suivie
             {$pull: { followers: req.params.id }},
