@@ -15,4 +15,8 @@ router.get('/:id' , user.getOneUser)
 router.put('/:id', user.updateUser)
 router.delete('/:id', user.deleteUser)
 
+// Création des routes followers/following
+router.patch('/follow/:id', user.followUser)
+router.patch('/unfollow/:id', user.unfollowUser)
+
 module.exports = router;

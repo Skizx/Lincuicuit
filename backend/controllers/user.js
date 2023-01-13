@@ -60,3 +60,77 @@ module.exports.deleteUser = async (req, res) => {
         return res.status(500).json({ message: err})
     }
 }
+
+module.exports.followUser = async (req, res) => {
+    // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    // +
+    // Vérification que l'idToFollow est existante dans la base de données
+    if(!ObjetID.isValid(req.params.id) || !ObjetID.isValid(req.body.idToFollow) )
+    return res.status(400).send('ID Inconnu : ' + req.params.id)
+
+    try {
+        // Ajout a la liste des followers
+         userModels.findByIdAndUpdate(
+            req.params.id,
+            // Ajout a la liste des followers avec addToSet en récupérant l'id de la personne à suivre
+            {$addToSet: { following: req.body.idToFollow }},
+            {new: true, upsert: true},
+            // Callback err ou data
+            (err,docs) => {
+                if(!err) return res.status(201).json(docs);
+                else return res.status(400).jsos(err)
+            }
+        );
+        // Ajout a la liste following
+        userModels.findByIdAndUpdate(
+            req.body.idToFollow,
+            // Ajout à la liste des following avec addToSet en récupérant l'id de la personne suivie
+            {$addToSet: { followers: req.params.id }},
+            {new: true, upsert: true},
+            // Callback err ou data
+            (err,docs) => {
+                //if(!err) return res.status(201).json(docs);
+                if (err) res.status(400).json(err)
+            }
+        ); 
+    } catch(err) {
+        return res.status(500).json({ message: err})
+    }
+}
+
+module.exports.unfollowUser = async (req, res) => {
+    // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    // +
+    // Vérification que l'idToFollow est existante dans la base de données
+    if(!ObjetID.isValid(req.params.id) || !ObjetID.isValid(req.body.idToUnfollow) )
+    return res.status(400).send('ID Inconnu : ' + req.params.id)
+
+    try {
+        // Ajout a la liste des followers
+         userModels.findByIdAndUpdate(
+            req.params.id,
+            // Retrait de la liste des followers avec Pull en récupérant l'id de la personne à suivre
+            {$pull: { following: req.body.idToUnfollow }},
+            {new: true, upsert: true},
+            // Callback err ou data
+            (err,docs) => {
+                if(!err) return res.status(201).json(docs);
+                else return res.status(400).jsos(err)
+            }
+        );
+        // Ajout a la liste following
+        userModels.findByIdAndUpdate(
+            req.body.idToUnfollow,
+            // Retrait de la liste des following avec Pull en récupérant l'id de la personne suivie
+            {$pull: { followers: req.params.id }},
+            {new: true, upsert: true},
+            // Callback err ou data
+            (err,docs) => {
+                //if(!err) return res.status(201).json(docs);
+                if (err) res.status(400).json(err)
+            }
+        ); 
+    } catch(err) {
+        return res.status(500).json({ message: err})
+    }
+}
