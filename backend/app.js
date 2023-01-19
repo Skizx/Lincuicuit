@@ -1,11 +1,14 @@
 const express = require('express');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user-routes');
 const mongoose = require('mongoose');
 const app = express();
+const {checkAuth, firstAuth} = require('./middleware/auth')
 require('dotenv').config({path: './config/.env'})
 
 
+app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
@@ -28,8 +31,13 @@ app.use((req, res, next) => {
   });
 
 //+++++++++++++ MIDDLEWARE ++++++++++++++
+// Sécurisation Routes jwt
+app.get('*', checkAuth);
+app.get('/jwtid', firstAuth, (req, res) => {
+  res.status(200).send(res.locals.user._id)
+})
 
-// routes
-app.use('/api/user', userRoutes)
+// Routes
+app.use('/api/user', userRoutes);
 
 module.exports = app;

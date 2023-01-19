@@ -2,11 +2,11 @@
 const userModels = require('../models/user-model')
 const jwt = require('jsonwebtoken')
 
-const maxAge = 3 * 24 * 60 * 60 * 1000;
+const timerToken = 3 * 24 * 60 * 60 * 1000;
 
 const createToken = (id) => {
   return jwt.sign({id}, process.env.TOKEN_SECRET, {
-    expiresIn: maxAge
+    expiresIn: timerToken
   })
 };
 
@@ -24,15 +24,21 @@ module.exports.signUp = async (req, res) => {
 
 }
 
+// Création middleware Login permettant a un utilisateur déjà enregistré dans la base de données de se connecter
 module.exports.login = async (req, res) => {    
     const { email, password } = req.body
 
   try {
     const user = await userModels.login(email, password);
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge});
+    res.cookie('jwt', token, { httpOnly: true, timerToken});
     res.status(200).json({ user: user._id})
   } catch (err){
-    res.status(200).json({ err });
+    res.status(401).json({ err });
   }
+}
+
+module.exports.logout = (req, res) => {
+    res.cookie('jwt', '', { timerToken: 1 });
+    res.redirect('/');
 }

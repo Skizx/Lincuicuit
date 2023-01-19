@@ -11,6 +11,8 @@ const router = express.Router();
 router.post("/register", authController.signUp);
 // Connexion d'un utilisateur déjà existant
 router.post('/login', authController.login)
+// Déconnexion d'un utilisateur
+router.get('/logout', authController.logout)
 
 
 
