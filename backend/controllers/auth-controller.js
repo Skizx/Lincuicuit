@@ -1,6 +1,7 @@
 // Importation du model User
 const userModels = require('../models/user-model')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { signUpErrors, loginErrors } = require('../utils/errors');
 
 const timerToken = 3 * 24 * 60 * 60 * 1000;
 
@@ -19,14 +20,14 @@ module.exports.signUp = async (req, res) => {
         res.status(201).json({ user: user._id});
     }
     catch(err) {
-        res.status(401).send({ err })
+        const errors = signUpErrors(err)
+        res.status(401).send({ errors })
     }
-
-}
+};
 
 // Création middleware Login permettant a un utilisateur déjà enregistré dans la base de données de se connecter
 module.exports.login = async (req, res) => {    
-    const { email, password } = req.body
+    const { email, password } = req.body;
 
   try {
     const user = await userModels.login(email, password);
@@ -34,9 +35,10 @@ module.exports.login = async (req, res) => {
     res.cookie('jwt', token, { httpOnly: true, timerToken});
     res.status(200).json({ user: user._id})
   } catch (err){
-    res.status(401).json({ err });
+    res.status(401).json({ err: 'Paire identifiant/mot de passe incorrecte !' });
   }
-}
+};
+
 
 module.exports.logout = (req, res) => {
     res.cookie('jwt', '', { timerToken: 1 });
