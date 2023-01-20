@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user-routes');
+const postRoutes = require('./routes/post-routes');
 const mongoose = require('mongoose');
 const app = express();
 const {checkAuth, firstAuth} = require('./middleware/auth')
@@ -39,5 +40,6 @@ app.get('/jwtid', firstAuth, (req, res) => {
 
 // Routes
 app.use('/api/user', userRoutes);
+app.use('/api/post', postRoutes);
 
 module.exports = app;
