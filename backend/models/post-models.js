@@ -23,9 +23,6 @@ const postSchema = new mongoose.Schema(
         usersLiked: {
             type: [String]
         },
-        usersDisliked: {
-            type: [String]
-        },
         comments: {
             type: [
                 {

@@ -1,5 +1,5 @@
 const userModels = require('../models/user-model');
-const ObjetID = require('mongoose').Types.ObjectId;
+const ObjectID = require('mongoose').Types.ObjectId;
 
 // Affichage de tout les utilisateurs
 module.exports.getAllUsers = async (req, res) => {
@@ -10,8 +10,8 @@ module.exports.getAllUsers = async (req, res) => {
 
 // Affichage d'un seul utilisateur
 module.exports.getOneUser = async (req,res) => {
-    // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
-    if(!ObjetID.isValid(req.params.id))
+    // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    if(!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID Inconnu : ' + req.params.id)
 
     // Utilisation de la méthode findById pour recupérer l'id de l'objet en la comparant à l'id du parametre de requête
@@ -23,8 +23,8 @@ module.exports.getOneUser = async (req,res) => {
 };
 
 module.exports.updateUser = async (req, res) => {
-    // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
-    if(!ObjetID.isValid(req.params.id))
+    // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    if(!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID Inconnu : ' + req.params.id)
 
     // Utilisation de la méthode findByIdAndUpdate permettant de recupérer l'id et mettre à jour la bio
@@ -49,8 +49,8 @@ module.exports.updateUser = async (req, res) => {
 };
 
 module.exports.deleteUser = async (req, res) => {
-    // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
-    if(!ObjetID.isValid(req.params.id))
+    // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    if(!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID Inconnu : ' + req.params.id)
 
     try {
@@ -62,10 +62,10 @@ module.exports.deleteUser = async (req, res) => {
 }
 
 module.exports.followUser = async (req, res) => {
-    // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
     // +
     // Vérification que l'idToFollow est existante dans la base de données
-    if(!ObjetID.isValid(req.params.id) || !ObjetID.isValid(req.body.idToFollow) )
+    if(!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.idToFollow) )
     return res.status(400).send('ID Inconnu : ' + req.params.id)
 
     try {
@@ -99,10 +99,10 @@ module.exports.followUser = async (req, res) => {
 }
 
 module.exports.unfollowUser = async (req, res) => {
-    // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
     // +
     // Vérification que l'idToFollow est existante dans la base de données
-    if(!ObjetID.isValid(req.params.id) || !ObjetID.isValid(req.body.idToUnfollow) )
+    if(!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.idToUnfollow) )
     return res.status(400).send('ID Inconnu : ' + req.params.id)
 
     try {
