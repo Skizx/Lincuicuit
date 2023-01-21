@@ -144,4 +144,49 @@ module.exports.userDisliked = (req, res) => {
     } catch(err) {
         return res.status(500).json({ message: err})
     }
+};
+
+module.exports.userComment =  (req,res) => {
+    // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    if(!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID Inconnu : ' + req.params.id)
+
+    try {
+        // Récupération de l'id en paramètre + utilisation de push pour ajouter un commentaire à la suite dans le tableau
+        return postModels.findByIdAndUpdate(
+            req.params.id,
+            {$push: {
+                comments: {
+                    commentId: req.body.commentId,
+                    commentPseudo: req.body.commentPseudo,
+                    text: req.body.text,
+                    timestamp: new Date().getTime(),
+                },
+            },
+        },
+        { new: true},
+        // Callback err/docs
+        (err,docs) => {
+            if (!err) {
+                return res.send(docs)
+            } else {
+                return res.status(400).send(err)
+            }
+        }
+        )
+    } catch (err) {
+        return res.status(400).send(err)
+    }
+};
+
+module.exports.userEditComment = async (req,res) => {
+    // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    if(!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID Inconnu : ' + req.params.id)
+}
+
+module.exports.deleteComment = async (req,res) => {
+    // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    if(!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID Inconnu : ' + req.params.id)
 }

@@ -14,6 +14,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 //Je connecte mon API à ma base de données
+mongoose.set("strictQuery", false);
 mongoose.connect(process.env.MONGO_URL,
     { useNewUrlParser: true,
       useUnifiedTopology: true })
