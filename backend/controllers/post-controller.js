@@ -14,7 +14,7 @@ module.exports.getPost = (req, res) => {
         }
         
     })
-}
+};
 
 // Création d'un post
 module.exports.createPost = async (req, res) => {
@@ -32,7 +32,7 @@ module.exports.createPost = async (req, res) => {
     } catch (err) {
         return res.status(401).send(err)
     }
-}
+};
 
 module.exports.updatePost = (req, res) => {
     // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
@@ -57,7 +57,7 @@ module.exports.updatePost = (req, res) => {
             }
         }
     )
-}
+};
 
 module.exports.deletePost = (req, res) => {
     // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
@@ -74,7 +74,7 @@ module.exports.deletePost = (req, res) => {
             }
         }
     )
-}
+};
 
 module.exports.userLiked = (req, res) => {
     // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
@@ -82,8 +82,8 @@ module.exports.userLiked = (req, res) => {
     return res.status(400).send('ID Inconnu : ' + req.params.id)
 
     try {
-        // Ajout a la liste des followers
-     userModels.findByIdAndUpdate(
+        // Ajout a la liste des Likers
+        postModels.findByIdAndUpdate(
             req.params.id,
             // Ajout a la liste des users aillant aimer avec addToSet en récupérant l'id de l'utilisateur
             {$addToSet: { usersLiked: req.body.id }},
@@ -94,7 +94,7 @@ module.exports.userLiked = (req, res) => {
                 else return res.status(400).jsos(err)
             }
         );
-        // Ajout a la liste following
+        // Ajout a la liste messageLike
         userModels.findByIdAndUpdate(
             req.body.id,
             // Ajout à la liste des likes avec addToSet en récupérant l'id du message liké
@@ -111,6 +111,37 @@ module.exports.userLiked = (req, res) => {
     }
 }
 
-module.exports.userDisliked = async (req, res) => {
-    
+module.exports.userDisliked = (req, res) => {
+    // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
+    if(!ObjectID.isValid(req.params.id))
+    return res.status(400).send('ID Inconnu : ' + req.params.id)
+
+    try {
+        // Ajout a la liste des Likers
+     postModels.findByIdAndUpdate(
+            req.params.id,
+            // Retrait a la liste des users aillant aimer avec pull en récupérant l'id de l'utilisateur
+            {$pull: { usersLiked: req.body.id }},
+            {new: true, upsert: true},
+            // Callback err ou data
+            (err,docs) => {
+                if(!err) return res.status(201).json(docs);
+                else return res.status(400).jsos(err)
+            }
+        );
+        // Ajout a la liste messageLike
+        userModels.findByIdAndUpdate(
+            req.body.id,
+            // Retrait à la liste des likes avec pull en récupérant l'id du message liké
+            {$pull: { likes: req.params.id }},
+            {new: true, upsert: true},
+            // Callback err ou data
+            (err,docs) => {
+                //if(!err) return res.status(201).json(docs);
+                if (err) res.status(400).json(err)
+            }
+        ); 
+    } catch(err) {
+        return res.status(500).json({ message: err})
+    }
 }
