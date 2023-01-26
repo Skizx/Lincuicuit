@@ -1,7 +1,10 @@
 // Importation d'Express
 const express = require('express');
 const authController = require('../controllers/auth-controller');
-const user = require('../controllers/user')
+const user = require('../controllers/user');
+const uploadController = require('../controllers/upload');
+const multer = require('multer');
+const upload = multer();
 
 // Création du router
 const router = express.Router();
@@ -25,5 +28,8 @@ router.delete('/:id', user.deleteUser)
 // Création des routes followers/following
 router.patch('/follow/:id', user.followUser)
 router.patch('/unfollow/:id', user.unfollowUser)
+
+// Création route upload
+router.post('/upload', upload.single('file'), uploadController.uploadProfil)
 
 module.exports = router;

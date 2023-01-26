@@ -14,6 +14,7 @@ module.exports.getPost = (req, res) => {
         }
         
     })
+    .sort({ createdAt: -1 })
 };
 
 // Création d'un post
@@ -157,7 +158,7 @@ module.exports.userComment =  (req,res) => {
             req.params.id,
             {$push: {
                 comments: {
-                    commentId: req.body.commentId,
+                    commentUserId: req.body.commentUserId,
                     commentPseudo: req.body.commentPseudo,
                     text: req.body.text,
                     timestamp: new Date().getTime(),
@@ -179,14 +180,65 @@ module.exports.userComment =  (req,res) => {
     }
 };
 
-module.exports.userEditComment = async (req,res) => {
+module.exports.userEditComment =  (req,res) => {
     // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
     if(!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID Inconnu : ' + req.params.id)
+
+    try {
+        // Récupération de l'id en paramètre + récupération de l'id du commentaire 
+        return postModels.findById(
+            req.params.id,
+            (err, docs) => {
+                const modifyComment = docs.comments.find((comment) => 
+                    comment._id.equals(req.body.commentId)
+                )
+                if (!modifyComment) 
+                    return res.status(404).send('Commentaire introuvable')
+                    // Récupération du text envoyé pour être modifier
+                    modifyComment.text = req.body.text;
+
+                    // Sauvegarde du nouveau commentaire après modification
+                    return docs.save((err) => {
+                        if(!err) 
+                        return res.status(200).send(docs);
+                        return res.status(500).send(err);
+                    }
+                )
+                
+            }
+        )
+    } catch (err) {
+       return res.status(400).send(err)
+    }
 }
 
-module.exports.deleteComment = async (req,res) => {
+module.exports.deleteComment =  (req,res) => {
     // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
     if(!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID Inconnu : ' + req.params.id)
+
+    try {
+        // Récupération de l'id en paramètre + utilisation de pull pour supprimer un commentaire selon l'ID 
+        return postModels.findByIdAndUpdate(
+            req.params.id,
+            {$pull: {
+             comments: {
+                _id: req.body.commentId
+            }
+        }
+        },
+        { new: true },
+        // Callback err/docs
+        (err, docs) => {
+            if (!err) {
+                return res.send(docs)
+            } else {
+                return res.status(400).send(err)
+            }
+        }
+        )
+    } catch (err) {
+        return res.status(400).send(err)
+    }
 }
