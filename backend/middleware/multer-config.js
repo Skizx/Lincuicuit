@@ -30,4 +30,4 @@ const storage = multer.diskStorage({
 // Exportation du middleware multer configurer
 // Utilisation de la méthode single() capturant les fichiers d'un certain type(image)
 // et les enregistre au système de fichiers du serveur
-module.exports = multer({ storage }).single('image');
+module.exports = multer({ storage }).single('picture');

@@ -20,11 +20,12 @@ module.exports.getPost = (req, res) => {
 // Création d'un post
 module.exports.createPost = async (req, res) => {
 
+    let fileName = req.body.postUserId + Date.now() + 'jpg';
     // Récupération du corps de la requête selon le critère dans la base de données
     const newPost = new postModels({
         postUserId: req.body.postUserId,
         message: req.body.message,
-        picture: req.body.picture,
+        picture: req.file !== null ? "../images" + fileName: "",
         video: req.body.video,
         usersLiked: [],
         comments: [],
