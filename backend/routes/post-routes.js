@@ -1,6 +1,7 @@
 // Importation d'express + routeur
 const express = require('express');
 const router = express.Router();
+const multer = require('../middleware/multer-config');
 
 // Importation des middlewares controller post
 const postController = require('../controllers/post-controller');
@@ -15,10 +16,10 @@ router.patch('/edit-comment/:id', postController.userEditComment);
 router.patch('/delete-comment/:id', postController.deleteComment);
 
 // Création des routes affichages/modification/suppréssion post
-router.get('/', postController.getPost);
-router.post('/', postController.createPost);
-router.put('/:id', postController.updatePost);
-router.delete('/:id', postController.deletePost);
+router.get('/', multer, postController.getPost);
+router.post('/', multer, postController.createPost);
+router.put('/:id', multer, postController.updatePost);
+router.delete('/:id', multer, postController.deletePost);
 
 // Exportation des differentes routes
 module.exports = router

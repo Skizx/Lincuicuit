@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user-routes');
 const postRoutes = require('./routes/post-routes');
 const mongoose = require('mongoose');
+const path = require('path');
 const app = express();
 const {checkAuth, firstAuth} = require('./middleware/auth')
 require('dotenv').config({path: './config/.env'})
@@ -38,6 +39,10 @@ app.get('*', checkAuth);
 app.get('/jwtid', firstAuth, (req, res) => {
   res.status(200).send(res.locals.user._id)
 })
+
+/** création d'un middleware pour indiquer à Express qu'il faut gérer la ressource images de manière statique 
+(un sous-répertoire de notre répertoire de base, __dirname:nom du dossier ) à chaque fois qu'elle reçoit une requête vers la route /images ***/
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Routes
 app.use('/api/user', userRoutes);

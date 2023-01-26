@@ -19,10 +19,12 @@ module.exports.getPost = (req, res) => {
 
 // Création d'un post
 module.exports.createPost = async (req, res) => {
+
     // Récupération du corps de la requête selon le critère dans la base de données
     const newPost = new postModels({
         postUserId: req.body.postUserId,
         message: req.body.message,
+        picture: req.body.picture,
         video: req.body.video,
         usersLiked: [],
         comments: [],
@@ -35,6 +37,7 @@ module.exports.createPost = async (req, res) => {
     }
 };
 
+// Mise à jour d'un post
 module.exports.updatePost = (req, res) => {
     // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
     if(!ObjectID.isValid(req.params.id))
@@ -60,6 +63,7 @@ module.exports.updatePost = (req, res) => {
     )
 };
 
+// Suppréssion d'un post
 module.exports.deletePost = (req, res) => {
     // Utilisation d'ObjetID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
     if(!ObjectID.isValid(req.params.id))
@@ -77,6 +81,7 @@ module.exports.deletePost = (req, res) => {
     )
 };
 
+// Likes
 module.exports.userLiked = (req, res) => {
     // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
     if(!ObjectID.isValid(req.params.id))

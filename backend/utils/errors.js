@@ -19,3 +19,4 @@ module.exports.signUpErrors = (err) => {
 
     return errors
 };
+
