@@ -9,14 +9,14 @@ module.exports.getAllUsers = async (req, res) => {
 };
 
 // Affichage d'un seul utilisateur
-module.exports.getOneUser = async (req,res) => {
+module.exports.getOneUser = (req,res) => {
     // Utilisation d'ObjectID pour servant a vérifier si l'id utilisateur est existant dans  la base de données
     if(!ObjectID.isValid(req.params.id))
     return res.status(400).send('ID Inconnu : ' + req.params.id)
 
     // Utilisation de la méthode findById pour recupérer l'id de l'objet en la comparant à l'id du parametre de requête
     // Callback err ou data
-    await userModels.findById(req.params.id, (err, docs) => {
+    userModels.findById(req.params.id, (err, docs) => {
         if(!err) res.send(docs);
         else console.log('ID inconnu: ' + err)
     }).select('-password')
