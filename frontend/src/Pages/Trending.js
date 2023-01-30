@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Tranding = () => {
+const Trending = () => {
     return (
         <div>
             Les nouvelles tendances !
@@ -8,4 +8,4 @@ const Tranding = () => {
     );
 };
 
-export default Tranding;
+export default Trending;
