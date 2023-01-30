@@ -14,7 +14,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path="/Error" element={<Error />}/>
+          <Route path="*" element={<Error />}/>
           <Route path="/Trending" element={<Trending />}/>
           <Route path="/Profil/:id" element={<Profil />}/>
         </Routes>
