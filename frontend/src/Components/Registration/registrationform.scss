@@ -1,0 +1,50 @@
+.registration-container {
+    width: 500px;
+    height: 500px;
+    border: 1px orange solid;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-image: url('../../Assets/background-registration.jpg');
+    background-position: center;
+}
+
+.profil-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.registration-title {
+    text-align: center;
+    margin-top: 20px;
+
+    &_button {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+li {
+    cursor: pointer;
+    margin: 5px 10px;
+    padding: 10px;
+    border: 1px orange solid;
+    border-radius: 20px;
+    width: 90px;
+    text-align: center;
+    transition: all 0.5s;
+
+    &:hover {
+        transition: all 0.5s;
+        background-color: orange;
+        color: white;
+        border-color: white;
+    }
+}
+
+.btn-active:active {
+    background-color: orange;
+    color: white;
+    border-color: white;
+}

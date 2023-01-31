@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<Home />}/>
           <Route path="*" element={<Error />}/>
           <Route path="/Trending" element={<Trending />}/>
-          <Route path="/Profil/:id" element={<Profil />}/>
+          <Route path="/Profil" element={<Profil />}/>
         </Routes>
       </main>
       <footer>
