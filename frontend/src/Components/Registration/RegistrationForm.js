@@ -21,13 +21,13 @@ const RegistrationForm = (props) => {
         <div className='registration-form'>
             <div className="registration-form_container">
                 <div className="registration-title">
-                    {loginForm && <Login />}
-                    {signupForm && <Signup />}
                 </div>
                 <ul className='registration-title_button'>
                     <li onClick={handleModals} id="login" className="btn-active">Connexion</li>
                     <li onClick={handleModals} id="register" className='btn-active'>S'inscrire</li>
                 </ul>
+                    {loginForm && <Login />}
+                    {signupForm && <Signup />}
             </div>
         </div>
     );
