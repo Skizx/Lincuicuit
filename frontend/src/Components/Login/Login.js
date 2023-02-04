@@ -15,6 +15,7 @@ const Login = () => {
         axios({
             method: "post",
             url: `${process.env.REACT_APP_CALL_API}api/user/login`,
+            withCredentials : true,
             data: {
                 email,
                 password,

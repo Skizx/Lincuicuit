@@ -5,6 +5,7 @@ const userRoutes = require('./routes/user-routes');
 const postRoutes = require('./routes/post-routes');
 const mongoose = require('mongoose');
 const path = require('path');
+const cors = require('cors');
 const app = express();
 const {checkAuth, firstAuth} = require('./middleware/auth')
 require('dotenv').config({path: './config/.env'})
@@ -24,12 +25,11 @@ mongoose.connect(process.env.MONGO_URL,
 
 //+++++++++++++ CORS +++++++++++++++++++
 app.use((req, res, next) => {
-    // L'origine pouvant acceder à l'API sera "*" Tout le monde
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    // Je donne l'autorisation d'utiliser certain en-tête
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    // Ainsi que sur certaine méthode "Verbe de requête"
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Access-Control-Allow-Methods","PUT, POST, GET, DELETE, PATCH, OPTIONS");
     next();
   });
 
