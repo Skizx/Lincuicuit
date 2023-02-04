@@ -35,7 +35,7 @@ module.exports.login = async (req, res) => {
     res.cookie('jwt', token, { httpOnly: true, timerToken});
     res.status(200).json({ user: user._id})
   } catch (err){
-    res.status(401).json({ err: 'Paire identifiant/mot de passe incorrecte !' });
+    res.status(201).json({ err: 'Paire identifiant/mot de passe incorrecte !' });
   }
 };
 
