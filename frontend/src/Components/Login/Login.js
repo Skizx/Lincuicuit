@@ -8,24 +8,29 @@ const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        const emailError = document.querySelector('.email.error')
-        const passwordError = document.querySelector('.password.error')
+        const emailError = document.querySelector('.emailerror')
+        const passwordError = document.querySelector('.passworderror')
 
 
         axios({
             method: "post",
             url: `${process.env.REACT_APP_CALL_API}api/user/login`,
-            withCredentials: true,
             data: {
                 email,
                 password,
+            },
+        })
+        .then((response) => {
+            console.log(response)
+            if (response.data.err) {
+                emailError.innerHTML = response.data.err;
+                passwordError.innerHTML = response.data.err;
+            } else {
+                window.location = '/'
             }
         })
-
-        .then((res) => {
-            if (res.data.errors) {
-                
-            }
+        .catch((err) => {
+            console.log(err)
         })
     }
 
@@ -35,12 +40,12 @@ const Login = () => {
             <label htmlFor="email">Email</label>
             <br />
             <input type="text" name='email' id='email' onChange={(e) => setEmail(e.target.value)} value={email} />
-            <div className="email error"></div>
+            <div className="emailerror"></div>
             <br />
             <label htmlFor="password">Mot de passe</label>
             <br />
             <input type="password" name='password' id='password' onChange={(e) => setPassword(e.target.value)} value={password} />
-            <div className="password error"></div>
+            <div className="passworderror"></div>
             <br />
             <input type="submit" value="Se connecter" />
         </form>
