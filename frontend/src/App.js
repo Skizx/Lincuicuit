@@ -21,7 +21,6 @@ function App() {
         withCredentials: true
       })
       .then((res) => {
-        console.log(res)
         setUserId(res.data)
       })
       .catch((err) => console.log("No token"))
