@@ -13,7 +13,7 @@ module.exports.checkAuth = (req, res, next) => {
         jwt.verify(token, process.env.TOKEN_SECRET, async( err, decodedToken ) => {
             if (err) {
                 res.locals.user = null;
-                res.cookie('jwt', '', { timerToken : 1})
+                res.cookie('jwt', '', { timerToken : 1}, { sameSite : 'none', secure: true})
                 next()
                 // SI OK 
             } else {

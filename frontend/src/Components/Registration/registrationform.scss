@@ -2,8 +2,10 @@
     display: flex;
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    background-image: url('../../Assets/background-registration.jpg');
+    background: url('../../Assets/5295526.jpg');
+    background-color: $color-background;
     background-position: center;
+    object-fit: contain;
     /***** MEDIA QUERIES DESKTOP
     
     width: 500px;
@@ -72,8 +74,8 @@ li {
     cursor: pointer;
     margin: 5px 10px;
     padding: 10px;
-    border: 1px indigo solid;
-    background-color: white;
+    border: 2px $color-text solid;
+    background-color: $color-background;
     border-radius: 20px;
     width: 90px;
     text-align: center;
@@ -81,16 +83,14 @@ li {
 
     &:hover {
         transition: all 0.5s;
-        background-color: indigo;
-        color: white;
-        border-color: white;
+        color: $color-primary;
+        border-color: $color-primary;
     }
 }
 
 .btn-active:active {
-    background-color: indigo;
-    color: white;
-    border-color: white;
+    color: $color-primary;
+    border-color: $color-primary;
 }
 
 .form-container {
@@ -104,37 +104,39 @@ li {
 }
 
 input[type=text] {
-    border: 1px solid indigo;
+    border: 2px solid $color-text;
     border-radius: 25px;
     width: 240px;
     height: 30px;
-    background: white;
+    background: $color-background;
     text-align: center;
+    color: $color-text;
 }
 
 input[type=password] {
-    border: 1px solid indigo;
+    border: 2px solid $color-text;
     border-radius: 25px;
     width: 240px;
     height: 30px;
-    background: white;
+    background: $color-background;
+    color: $color-text;
     text-align: center;
 }
 
 input[type=submit] {
-    border: 1px solid indigo;
+    border: 2px solid $color-text;
     border-radius: 25px;
     width: 240px;
     height: 35px;
-    background: white;
+    background: $color-background;
+    color: $color-text;
     cursor: pointer;
     font-family: 'Dancing';
 
     &:hover {
         transition: all 0.5s;
-        background-color: indigo;
-        color: white;
-        border-color: white;
+        color: $color-primary;
+        border-color: $color-primary;
     }
 }
 
