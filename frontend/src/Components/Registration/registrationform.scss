@@ -148,8 +148,15 @@ input[type=submit] {
     }
 }
 
+.termserror,
 .pseudoerror,
 .passworderror,
+.passwordconfirmerror,
 .emailerror {
     color: red;
+}
+
+.signup-succes {
+    color: green;
+    text-align: center;
 }

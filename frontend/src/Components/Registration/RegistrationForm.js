@@ -21,7 +21,7 @@ const RegistrationForm = (props) => {
         <div className='registration-form'>
             <div className="registration-form_container">
                 <div className="registration-title">
-                    LINCUICUIT
+                    <h1>LINCUICUIT</h1>
                 </div>
                 <ul className='registration-title_button'>
                     <li onClick={handleModals} id="login" className="btn-active">Connexion</li>

@@ -11,7 +11,7 @@ module.exports.signUpErrors = (err) => {
 
     // Idem + password
     if (err.message.includes("password"))
-    errors.email = "Le mot de passe doit faire 4 caractères minimum"
+    errors.password = "Le mot de passe doit faire 4 caractères minimum"
 
     // Si err contient un code d'une valeur 11000 + une keyValue contenant email à l'intérieur retourne le message d'erreur suivant
     if (err.code === 11000 && Object.keys(err.keyValue)[0].includes("email"))

@@ -32,7 +32,7 @@ module.exports.login = async (req, res) => {
   try {
     const user = await userModels.login(email, password);
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, timerToken});
+    res.cookie('jwt', token, { httpOnly: true, timerToken,  sameSite: 'none', secure: true});
     res.status(200).json({ user: user._id})
   } catch (err){
     res.status(200).json({ err: 'Paire identifiant/mot de passe incorrecte !' });
