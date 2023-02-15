@@ -23,7 +23,7 @@ const Navbar = () => {
                 </ul>
             ) : (
                 <ul className='nav-profil'>
-                    <li>
+                    <li className='nav-profil_li'>
                         <Link to='/Profil'>
                          <div>Connexion</div>
                         </Link>
