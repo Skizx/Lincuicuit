@@ -19,6 +19,16 @@ body {
     font-family: 'Raleway', 'Dancing Script';
 }
 
+a {
+    text-decoration: none;
+    color: $color-text;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
 li {
     list-style: none;
 }

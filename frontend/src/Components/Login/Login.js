@@ -39,12 +39,9 @@ const Login = () => {
         <form action="" onSubmit={handleLogin} id="login-Form" className='form-container'>
 
             <label htmlFor="email">Email</label>
-            <br />
             <input type="text" name='email' id='email' onChange={(e) => setEmail(e.target.value)} value={email} />
             <div className="emailerror"></div>
-            <br />
             <label htmlFor="password">Mot de passe</label>
-            <br />
             <input type="password" name='password' id='password' onChange={(e) => setPassword(e.target.value)} value={password} />
             <div className="passworderror"></div>
             <br />

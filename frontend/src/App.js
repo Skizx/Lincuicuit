@@ -6,6 +6,7 @@ import Home from "./Pages/Home";
 import Profil from "./Pages/Profil";
 import Trending from "./Pages/Trending";
 import { UserContext } from "./Hooks/UserContext";
+import Navbar from "./Components/Navbar/Navbar";
 
 
 function App() {
@@ -29,22 +30,23 @@ function App() {
   }, [userId]);
 
   return (
+    <UserContext.Provider value={userId}>
     <div>
       <header>
+        <Navbar />
       </header>
       <main>
-        <UserContext.Provider value={userId}>
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="*" element={<Error />}/>
           <Route path="/Trending" element={<Trending />}/>
           <Route path="/Profil" element={<Profil />}/>
         </Routes>
-        </UserContext.Provider>
       </main>
       <footer>
       </footer>
     </div>
+    </UserContext.Provider>
   );
 }
 

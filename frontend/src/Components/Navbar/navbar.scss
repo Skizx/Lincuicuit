@@ -1,0 +1,42 @@
+.nav-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+    border-bottom: 2px solid $color-text;
+    padding: 14px;
+
+    &_center{
+        cursor: pointer;
+        transition: all 0.5s;
+
+        &:hover {
+            transition: all 0.5s;
+            text-shadow: 5px 9px 3px;
+        }
+    }
+    
+    &_block {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+.nav-profil {
+    display: flex;
+    gap: 10px;
+
+    &_li {
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        flex-direction: row;
+        transition: all 0.5s;
+
+        &:hover {
+            transition: all 0.5s;
+            text-shadow: 5px 9px 3px;
+        }
+    }
+}

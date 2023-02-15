@@ -67,23 +67,17 @@ const Signup = () => {
 
             <form action="" onSubmit={handleSignUp} id="login-Form" className='form-container'>
             <label htmlFor="pseudo">Pseudo</label>
-            <br />
             <input type="text" name='pseudo' id='pseudo' onChange={(e) => setPseudo(e.target.value)} value={pseudo} />
             <div className="pseudoerror"></div>
             <label htmlFor="email">Email</label>
-            <br />
             <input type="text" name='email' id='email' onChange={(e) => setEmail(e.target.value)} value={email} />
             <div className="emailerror"></div>
-            <br />
             <label htmlFor="password">Mot de passe</label>
-            <br />
             <input type="password" name='password' id='password' onChange={(e) => setPassword(e.target.value)} value={password} />
             <div className="passworderror"></div>
-            <label htmlFor="password">Comfirmer votre Mot de passe</label>
-            <br />
+            <label htmlFor="password">Confirmer votre Mot de passe</label>
             <input type="password" name='controlpassword' id='controlpassword' onChange={(e) => setControlPassword(e.target.value)} value={controlPassword} />
             <div className="passwordconfirmerror"></div>
-            <br />
             <div>
                 <input type="checkbox" name="terms" id="checkbox" className='form-container_checkbox' />
                 <label htmlFor="terms">J'accepte les <a href="/" className='form-container_checkbox--link' target="_blank" rel="noopener noreferrer">Conditions générales</a> </label>
